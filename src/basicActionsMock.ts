@@ -1,25 +1,37 @@
-import { Safe, SafeAssetClass, SafeUserProxy, SafeUserProxyAssetClass } from '../generated/schema';
+import { AssetClass, Safe, SafeAssetClass, SafeUserProxy, SafeUserProxyAssetClass } from '../generated/schema';
 import { CreateSafe as CreateSafeEvent } from './../generated/templates/BasicActionsMock/BasicActionsMock';
 
 export function handleCreateSafe(event: CreateSafeEvent): void {
-    const blockTimeStamp = event.block.timestamp
     const transactionHash = event.transaction.hash
     const safeId = transactionHash.toHexString()
     const userId = event.params.user.toHexString()
-    const collateralTypeId = event.params.collateralType.toHexString()
+    const collateralType = event.params.collateralType
+    const collateralTypeIdHex = collateralType.toHexString()
     const safeUserProxyId = safeId + "-" + userId
-    const safeAssetClassId = safeId + "-" + collateralTypeId
-    const safeUserProxyAssetClassId = safeUserProxyId + "-" + collateralTypeId
+    const safeAssetClassId = safeId + "-" + collateralTypeIdHex
+    const safeUserProxyAssetClassId = safeUserProxyId + "-" + collateralTypeIdHex
+
+    const amountCollateral = event.params.amountCollateral
+    const amountCoin = event.params.amountCoin
+
+    const blockTimeStamp = event.block.timestamp
+
+    let assetClass = AssetClass.load(collateralTypeIdHex)
+    if (assetClass) {
+        assetClass.collateralLocked = assetClass.collateralLocked.plus(amountCollateral)
+        assetClass.debtTokensHeld = assetClass.debtTokensHeld.plus(amountCoin)
+        assetClass.save()
+    }
 
     let safe = Safe.load(safeId)
     if (!safe) {
         safe = new Safe(safeId)
         safe.id = safeId
         safe.user = event.params.user
-        safe.amountCollateral = event.params.amountCollateral
-        safe.amountCoin = event.params.amountCoin
+        safe.amountCollateral = amountCollateral
+        safe.amountCoin = amountCoin
         safe.collateralType = event.params.collateralType
-        safe.assetClass = collateralTypeId
+        safe.assetClass = collateralTypeIdHex
         safe.transactionHash = transactionHash
         safe.createdTimeStamp = blockTimeStamp
         safe.save()
@@ -39,7 +51,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         safeAssetClass = new SafeAssetClass(safeAssetClassId)
         safeAssetClass.id = safeAssetClassId
         safeAssetClass.safe = safeId
-        safeAssetClass.assetClass = collateralTypeId
+        safeAssetClass.assetClass = collateralTypeIdHex
         safeAssetClass.save()
     }
 
@@ -48,7 +60,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         safeUserProxyAssetClass = new SafeUserProxyAssetClass(safeUserProxyAssetClassId)
         safeUserProxyAssetClass.id = safeUserProxyAssetClassId
         safeUserProxyAssetClass.safeUserProxy = safeUserProxyId
-        safeUserProxyAssetClass.assetClass = collateralTypeId
+        safeUserProxyAssetClass.assetClass = collateralTypeIdHex
         safeUserProxyAssetClass.userProxy = userId
         safeUserProxyAssetClass.save()
     }

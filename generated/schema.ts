@@ -89,6 +89,32 @@ export class AssetClass extends Entity {
     this.set("collateral", Value.fromBytes(value));
   }
 
+  get collateralLocked(): BigInt {
+    let value = this.get("collateralLocked");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set collateralLocked(value: BigInt) {
+    this.set("collateralLocked", Value.fromBigInt(value));
+  }
+
+  get debtTokensHeld(): BigInt {
+    let value = this.get("debtTokensHeld");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set debtTokensHeld(value: BigInt) {
+    this.set("debtTokensHeld", Value.fromBigInt(value));
+  }
+
   get safes(): SafeAssetClassLoader {
     return new SafeAssetClassLoader(
       "AssetClass",

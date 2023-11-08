@@ -3,6 +3,8 @@ type AssetClass @entity {
   collateralType: Bytes!
   collateralTypeName: String!
   collateral: Bytes!
+  collateralLocked: BigInt!
+  debtTokensHeld: BigInt!
   safes: [SafeAssetClass!] @derivedFrom(field: "assetClass")
   transactionHash: Bytes
   createdTimeStamp: BigInt

@@ -1,34 +1,39 @@
 import { constants } from '@amxx/graphprotocol-utils';
-import { AssetClass, Safe, SafeAssetClass, SafeUserProxy, SafeUserProxyAssetClass } from '../generated/schema';
+import { AssetClass, Safe, SafeAssetClass, SafeIdCounter, SafeUserProxy, SafeUserProxyAssetClass } from '../generated/schema';
 import { CreateSafe as CreateSafeEvent } from './../generated/templates/BasicActionsMock/BasicActionsMock';
 
 export function handleCreateSafe(event: CreateSafeEvent): void {
-    const transactionHash = event.transaction.hash
-    const safeId = transactionHash.toHexString()
     const userId = event.params.user.toHexString()
     const collateralType = event.params.collateralType
     const collateralTypeIdHex = collateralType.toHexString()
-    const safeUserProxyId = safeId + "-" + userId
-    const safeAssetClassId = safeId + "-" + collateralTypeIdHex
-    const safeUserProxyAssetClassId = safeUserProxyId + "-" + collateralTypeIdHex
+    const safeIdCounterId = "safeIdCounter"
 
     const amountCollateral = event.params.amountCollateral
     const amountCoin = event.params.amountCoin
 
     const blockTimeStamp = event.block.timestamp
+    const transactionHash = event.transaction.hash
 
-    let assetClass = AssetClass.load(collateralTypeIdHex)
-    if (assetClass) {
-        assetClass.collateralLocked = assetClass.collateralLocked.plus(amountCollateral)
-        assetClass.debtTokensHeld = assetClass.debtTokensHeld.plus(amountCoin)
-        assetClass.activeVaults = assetClass.activeVaults.plus(constants.BIGINT_ONE)
-        assetClass.save()
+    let safeIdCounter = SafeIdCounter.load(safeIdCounterId)
+    if (!safeIdCounter) {
+        safeIdCounter = new SafeIdCounter(safeIdCounterId)
+        safeIdCounter.id = safeIdCounterId
+        safeIdCounter.idCounter = constants.BIGINT_ZERO
     }
+    safeIdCounter.idCounter = safeIdCounter.idCounter.plus(constants.BIGINT_ONE)
+    safeIdCounter.save()
+
+    const currentSafeIdCounter = safeIdCounter.idCounter
+    const safeId = currentSafeIdCounter.toHexString()
+    const safeUserProxyId = safeId + "-" + userId
+    const safeAssetClassId = safeId + "-" + collateralTypeIdHex
+    const safeUserProxyAssetClassId = safeUserProxyId + "-" + collateralTypeIdHex
 
     let safe = Safe.load(safeId)
     if (!safe) {
         safe = new Safe(safeId)
         safe.id = safeId
+        safe.safeId = currentSafeIdCounter
         safe.user = event.params.user
         safe.amountCollateral = amountCollateral
         safe.amountCoin = amountCoin
@@ -65,5 +70,13 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         safeUserProxyAssetClass.assetClass = collateralTypeIdHex
         safeUserProxyAssetClass.userProxy = userId
         safeUserProxyAssetClass.save()
+    }
+
+    let assetClass = AssetClass.load(collateralTypeIdHex)
+    if (assetClass) {
+        assetClass.collateralLocked = assetClass.collateralLocked.plus(amountCollateral)
+        assetClass.debtTokensHeld = assetClass.debtTokensHeld.plus(amountCoin)
+        assetClass.activeVaults = assetClass.activeVaults.plus(constants.BIGINT_ONE)
+        assetClass.save()
     }
 }

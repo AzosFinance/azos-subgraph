@@ -7,7 +7,7 @@ export function handleCreated(event: CreatedEvent): void {
     const blockTimeStamp = event.block.timestamp
     const transactionHash = event.transaction.hash
 
-    BasicActionsMock.create(event.params._owner)
+    BasicActionsMock.create(event.params._proxy)
 
     let userProxy = UserProxy.load(userProxyId)
     if (!userProxy) {

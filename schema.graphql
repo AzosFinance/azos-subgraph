@@ -22,8 +22,14 @@ type UserProxy @entity {
   createdTimeStamp: BigInt
 }
 
+type SafeIdCounter @entity {
+  id: ID!
+  idCounter: BigInt!
+}
+
 type Safe @entity {
   id: ID!
+  safeId: BigInt!
   user: Bytes!
   amountCollateral: BigInt!
   amountCoin: BigInt!

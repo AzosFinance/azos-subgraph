@@ -300,6 +300,61 @@ export class UserProxy extends Entity {
   }
 }
 
+export class SafeIdCounter extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save SafeIdCounter entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type SafeIdCounter must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("SafeIdCounter", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): SafeIdCounter | null {
+    return changetype<SafeIdCounter | null>(
+      store.get_in_block("SafeIdCounter", id)
+    );
+  }
+
+  static load(id: string): SafeIdCounter | null {
+    return changetype<SafeIdCounter | null>(store.get("SafeIdCounter", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get idCounter(): BigInt {
+    let value = this.get("idCounter");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set idCounter(value: BigInt) {
+    this.set("idCounter", Value.fromBigInt(value));
+  }
+}
+
 export class Safe extends Entity {
   constructor(id: string) {
     super();
@@ -337,6 +392,19 @@ export class Safe extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get safeId(): BigInt {
+    let value = this.get("safeId");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set safeId(value: BigInt) {
+    this.set("safeId", Value.fromBigInt(value));
   }
 
   get user(): Bytes {

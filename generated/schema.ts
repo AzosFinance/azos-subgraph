@@ -339,6 +339,19 @@ export class Safe extends Entity {
     this.set("collateralType", Value.fromBytes(value));
   }
 
+  get assetClass(): string {
+    let value = this.get("assetClass");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set assetClass(value: string) {
+    this.set("assetClass", Value.fromString(value));
+  }
+
   get transactionHash(): Bytes | null {
     let value = this.get("transactionHash");
     if (!value || value.kind == ValueKind.NULL) {

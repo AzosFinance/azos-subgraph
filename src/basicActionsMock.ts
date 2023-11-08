@@ -19,6 +19,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         safe.amountCollateral = event.params.amountCollateral
         safe.amountCoin = event.params.amountCoin
         safe.collateralType = event.params.collateralType
+        safe.assetClass = collateralTypeId
         safe.transactionHash = transactionHash
         safe.createdTimeStamp = blockTimeStamp
         safe.save()

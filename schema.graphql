@@ -24,6 +24,7 @@ type Safe @entity {
   amountCollateral: BigInt!
   amountCoin: BigInt!
   collateralType: Bytes!
+  assetClass: AssetClass!
   transactionHash: Bytes
   createdTimeStamp: BigInt
 }

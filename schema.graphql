@@ -1,0 +1,48 @@
+type AssetClass @entity {
+  id: ID!
+  collateralType: Bytes!
+  collateral: Bytes!
+  safes: [SafeAssetClass!] @derivedFrom(field: "assetClass")
+  transactionHash: Bytes
+  createdTimeStamp: BigInt
+}
+
+type UserProxy @entity {
+  id: ID!
+  sender: Bytes!
+  owner: Bytes!
+  proxy: Bytes!
+  safes: [SafeUserProxy!] @derivedFrom(field: "userProxy")
+  safesAssetClasses: [SafeUserProxyAssetClass!] @derivedFrom(field: "userProxy")
+  transactionHash: Bytes
+  createdTimeStamp: BigInt
+}
+
+type Safe @entity {
+  id: ID!
+  user: Bytes!
+  amountCollateral: BigInt!
+  amountCoin: BigInt!
+  collateralType: Bytes!
+  transactionHash: Bytes
+  createdTimeStamp: BigInt
+}
+
+type SafeAssetClass @entity {
+  id: ID!
+  safe: Safe!
+  assetClass: AssetClass!
+}
+
+type SafeUserProxy @entity {
+  id: ID!
+  safe: Safe!
+  userProxy: UserProxy!
+}
+
+type SafeUserProxyAssetClass @entity {
+  id: ID!
+  safeUserProxy: SafeUserProxy!
+  assetClass: AssetClass!
+  userProxy: UserProxy!
+}

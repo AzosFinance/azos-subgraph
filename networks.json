@@ -1,0 +1,16 @@
+{
+  "sepolia": {
+    "CollateralJoinFactory": {
+      "address": "0xC711FDaFfE3c794badbb7B094472e0Dd50742E9e",
+      "startBlock": 4633380
+    },
+    "BasicActionsMock": {
+      "address": "0xfd47f17587778127e0A29376B8cCAe8E810972F5",
+      "startBlock": 4651840
+    },
+    "HaiProxyFactory": {
+      "address": "0x857eeBEeb8077BE5191a367bf750ddC8f17Fc78c",
+      "startBlock": 4633381
+    }
+  }
+}

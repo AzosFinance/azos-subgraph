@@ -1,0 +1,65 @@
+specVersion: 0.0.5
+features:
+  - fullTextSearch
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CollateralJoinFactory
+    network: sepolia
+    source:
+      abi: CollateralJoinFactory
+      address: "0xC711FDaFfE3c794badbb7B094472e0Dd50742E9e"
+      startBlock: 4633380
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AssetClass
+      abis:
+        - name: CollateralJoinFactory
+          file: ./abis/CollateralJoinFactory.json
+      eventHandlers:
+        - event: DeployCollateralJoin(indexed bytes32,indexed address,indexed address)
+          handler: handleDeployCollateralJoin
+      file: ./src/collateralJoinFactory.ts
+  - kind: ethereum
+    name: HaiProxyFactory
+    network: sepolia
+    source:
+      abi: HaiProxyFactory
+      address: "0x857eeBEeb8077BE5191a367bf750ddC8f17Fc78c"
+      startBlock: 4633381
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AssetClass
+      abis:
+        - name: HaiProxyFactory
+          file: ./abis/HaiProxyFactory.json
+      eventHandlers:
+        - event: Created(indexed address,indexed address,address)
+          handler: handleCreated
+      file: ./src/haiProxyFactory.ts
+templates:
+  - name: BasicActionsMock
+    kind: ethereum/contract
+    network: sepolia
+    source:
+      abi: BasicActionsMock
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/basicActionsMock.ts
+      entities:
+        - Key
+      abis:
+        - name: BasicActionsMock
+          file: ./abis/BasicActionsMock.json
+      eventHandlers:
+        - event: CreateSafe(indexed address,indexed uint256,indexed uint256,bytes32)
+          handler: handleCreateSafe

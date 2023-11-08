@@ -66,7 +66,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
     if (assetClass) {
         assetClass.collateralLocked = assetClass.collateralLocked.plus(amountCollateral)
         assetClass.debtTokensHeld = assetClass.debtTokensHeld.plus(amountCoin)
-        assetClass.activeVaults = assetClass.activeVaults.plus(constants.BIGINT_ONE)
+        assetClass.activeSafes = assetClass.activeSafes.plus(constants.BIGINT_ONE)
         assetClass.save()
     }
 

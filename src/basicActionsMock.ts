@@ -74,7 +74,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
     if (ecosystemInfo) {
         ecosystemInfo.totalCollateralLocked = ecosystemInfo.totalCollateralLocked.plus(amountCollateral)
         ecosystemInfo.totalDebt = ecosystemInfo.totalDebt.plus(amountCoin)
-        ecosystemInfo.totalUserProxies = ecosystemInfo.totalUserProxies.plus(constants.BIGINT_ONE)
+        ecosystemInfo.totalSafes = ecosystemInfo.totalSafes.plus(constants.BIGINT_ONE)
         ecosystemInfo.save()
     }
 }

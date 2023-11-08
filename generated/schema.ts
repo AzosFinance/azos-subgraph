@@ -91,19 +91,6 @@ export class EcosystemInfo extends Entity {
     this.set("totalSafes", Value.fromBigInt(value));
   }
 
-  get totalUserProxies(): BigInt {
-    let value = this.get("totalUserProxies");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set totalUserProxies(value: BigInt) {
-    this.set("totalUserProxies", Value.fromBigInt(value));
-  }
-
   get totalAssetClasses(): BigInt {
     let value = this.get("totalAssetClasses");
     if (!value || value.kind == ValueKind.NULL) {

@@ -3,7 +3,6 @@ type EcosystemInfo @entity {
   totalCollateralLocked: BigInt!
   totalDebt: BigInt!
   totalSafes: BigInt!
-  totalUserProxies: BigInt!
   totalAssetClasses: BigInt!
 }
 

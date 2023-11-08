@@ -33,9 +33,8 @@ export function handleDeployCollateralJoin(event: DeployCollateralJoinEvent): vo
         ecosystemInfo.totalCollateralLocked = constants.BIGINT_ZERO
         ecosystemInfo.totalDebt = constants.BIGINT_ZERO
         ecosystemInfo.totalSafes = constants.BIGINT_ZERO
-        ecosystemInfo.totalUserProxies = constants.BIGINT_ZERO
         ecosystemInfo.totalAssetClasses = constants.BIGINT_ZERO
     }
-    ecosystemInfo.totalAssetClasses = ecosystemInfo.totalUserProxies.plus(constants.BIGINT_ONE)
+    ecosystemInfo.totalAssetClasses = ecosystemInfo.totalAssetClasses.plus(constants.BIGINT_ONE)
     ecosystemInfo.save()
 }

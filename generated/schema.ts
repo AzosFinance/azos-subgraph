@@ -11,6 +11,113 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class EcosystemInfo extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save EcosystemInfo entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type EcosystemInfo must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("EcosystemInfo", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): EcosystemInfo | null {
+    return changetype<EcosystemInfo | null>(
+      store.get_in_block("EcosystemInfo", id)
+    );
+  }
+
+  static load(id: string): EcosystemInfo | null {
+    return changetype<EcosystemInfo | null>(store.get("EcosystemInfo", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get totalCollateralLocked(): BigInt {
+    let value = this.get("totalCollateralLocked");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalCollateralLocked(value: BigInt) {
+    this.set("totalCollateralLocked", Value.fromBigInt(value));
+  }
+
+  get totalDebt(): BigInt {
+    let value = this.get("totalDebt");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalDebt(value: BigInt) {
+    this.set("totalDebt", Value.fromBigInt(value));
+  }
+
+  get totalSafes(): BigInt {
+    let value = this.get("totalSafes");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalSafes(value: BigInt) {
+    this.set("totalSafes", Value.fromBigInt(value));
+  }
+
+  get totalUserProxies(): BigInt {
+    let value = this.get("totalUserProxies");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalUserProxies(value: BigInt) {
+    this.set("totalUserProxies", Value.fromBigInt(value));
+  }
+
+  get totalAssetClasses(): BigInt {
+    let value = this.get("totalAssetClasses");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalAssetClasses(value: BigInt) {
+    this.set("totalAssetClasses", Value.fromBigInt(value));
+  }
+}
+
 export class AssetClass extends Entity {
   constructor(id: string) {
     super();

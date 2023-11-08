@@ -1,4 +1,4 @@
-import { AssetClass } from '../generated/schema';
+import { AssetClass, EcosystemInfo } from '../generated/schema';
 import { DeployCollateralJoin as DeployCollateralJoinEvent } from '../generated/CollateralJoinFactory/CollateralJoinFactory';
 import { ByteArray } from '@graphprotocol/graph-ts';
 import { constants } from '@amxx/graphprotocol-utils';
@@ -9,6 +9,7 @@ export function handleDeployCollateralJoin(event: DeployCollateralJoinEvent): vo
     const blockTimeStamp = event.block.timestamp
     const transactionHash = event.transaction.hash
     const collateralTypeName = ByteArray.fromHexString(collateralType.toHexString()).toString();
+    const ecosystemInfoId = "ecosystemInfo"
 
     let assetClass = AssetClass.load(assetClassIdHex)
     if (!assetClass) {
@@ -24,4 +25,17 @@ export function handleDeployCollateralJoin(event: DeployCollateralJoinEvent): vo
         assetClass.transactionHash = transactionHash
         assetClass.save()
     }
+
+    let ecosystemInfo = EcosystemInfo.load(ecosystemInfoId)
+    if (!ecosystemInfo) {
+        ecosystemInfo = new EcosystemInfo(ecosystemInfoId)
+        ecosystemInfo.id = ecosystemInfoId
+        ecosystemInfo.totalCollateralLocked = constants.BIGINT_ZERO
+        ecosystemInfo.totalDebt = constants.BIGINT_ZERO
+        ecosystemInfo.totalSafes = constants.BIGINT_ZERO
+        ecosystemInfo.totalUserProxies = constants.BIGINT_ZERO
+        ecosystemInfo.totalAssetClasses = constants.BIGINT_ZERO
+    }
+    ecosystemInfo.totalAssetClasses = ecosystemInfo.totalUserProxies.plus(constants.BIGINT_ONE)
+    ecosystemInfo.save()
 }

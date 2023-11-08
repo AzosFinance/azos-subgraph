@@ -1,5 +1,5 @@
 import { constants } from '@amxx/graphprotocol-utils';
-import { AssetClass, Safe, SafeAssetClass, SafeIdCounter, SafeUserProxy } from '../generated/schema';
+import { AssetClass, EcosystemInfo, Safe, SafeAssetClass, SafeIdCounter, SafeUserProxy } from '../generated/schema';
 import { CreateSafe as CreateSafeEvent } from './../generated/templates/BasicActionsMock/BasicActionsMock';
 
 export function handleCreateSafe(event: CreateSafeEvent): void {
@@ -7,6 +7,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
     const collateralType = event.params.collateralType
     const collateralTypeIdHex = collateralType.toHexString()
     const safeIdCounterId = "safeIdCounter"
+    const ecosystemInfoId = "ecosystemInfo"
 
     const amountCollateral = event.params.amountCollateral
     const amountCoin = event.params.amountCoin
@@ -67,5 +68,13 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         assetClass.debtTokensHeld = assetClass.debtTokensHeld.plus(amountCoin)
         assetClass.activeVaults = assetClass.activeVaults.plus(constants.BIGINT_ONE)
         assetClass.save()
+    }
+
+    let ecosystemInfo = EcosystemInfo.load(ecosystemInfoId)
+    if (ecosystemInfo) {
+        ecosystemInfo.totalCollateralLocked = ecosystemInfo.totalCollateralLocked.plus(amountCollateral)
+        ecosystemInfo.totalDebt = ecosystemInfo.totalDebt.plus(amountCoin)
+        ecosystemInfo.totalUserProxies = ecosystemInfo.totalUserProxies.plus(constants.BIGINT_ONE)
+        ecosystemInfo.save()
     }
 }

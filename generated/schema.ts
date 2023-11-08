@@ -257,14 +257,6 @@ export class UserProxy extends Entity {
     );
   }
 
-  get safesAssetClasses(): SafeUserProxyAssetClassLoader {
-    return new SafeUserProxyAssetClassLoader(
-      "UserProxy",
-      this.get("id")!.toString(),
-      "safesAssetClasses"
-    );
-  }
-
   get transactionHash(): Bytes | null {
     let value = this.get("transactionHash");
     if (!value || value.kind == ValueKind.NULL) {
@@ -643,92 +635,6 @@ export class SafeUserProxy extends Entity {
   }
 }
 
-export class SafeUserProxyAssetClass extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(
-      id != null,
-      "Cannot save SafeUserProxyAssetClass entity without an ID"
-    );
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type SafeUserProxyAssetClass must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
-      );
-      store.set("SafeUserProxyAssetClass", id.toString(), this);
-    }
-  }
-
-  static loadInBlock(id: string): SafeUserProxyAssetClass | null {
-    return changetype<SafeUserProxyAssetClass | null>(
-      store.get_in_block("SafeUserProxyAssetClass", id)
-    );
-  }
-
-  static load(id: string): SafeUserProxyAssetClass | null {
-    return changetype<SafeUserProxyAssetClass | null>(
-      store.get("SafeUserProxyAssetClass", id)
-    );
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get safeUserProxy(): string {
-    let value = this.get("safeUserProxy");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set safeUserProxy(value: string) {
-    this.set("safeUserProxy", Value.fromString(value));
-  }
-
-  get assetClass(): string {
-    let value = this.get("assetClass");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set assetClass(value: string) {
-    this.set("assetClass", Value.fromString(value));
-  }
-
-  get userProxy(): string {
-    let value = this.get("userProxy");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
-  }
-
-  set userProxy(value: string) {
-    this.set("userProxy", Value.fromString(value));
-  }
-}
-
 export class SafeAssetClassLoader extends Entity {
   _entity: string;
   _field: string;
@@ -762,23 +668,5 @@ export class SafeUserProxyLoader extends Entity {
   load(): SafeUserProxy[] {
     let value = store.loadRelated(this._entity, this._id, this._field);
     return changetype<SafeUserProxy[]>(value);
-  }
-}
-
-export class SafeUserProxyAssetClassLoader extends Entity {
-  _entity: string;
-  _field: string;
-  _id: string;
-
-  constructor(entity: string, id: string, field: string) {
-    super();
-    this._entity = entity;
-    this._id = id;
-    this._field = field;
-  }
-
-  load(): SafeUserProxyAssetClass[] {
-    let value = store.loadRelated(this._entity, this._id, this._field);
-    return changetype<SafeUserProxyAssetClass[]>(value);
   }
 }

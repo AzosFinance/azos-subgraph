@@ -1,5 +1,5 @@
 import { constants } from '@amxx/graphprotocol-utils';
-import { AssetClass, Safe, SafeAssetClass, SafeIdCounter, SafeUserProxy, SafeUserProxyAssetClass } from '../generated/schema';
+import { AssetClass, Safe, SafeAssetClass, SafeIdCounter, SafeUserProxy } from '../generated/schema';
 import { CreateSafe as CreateSafeEvent } from './../generated/templates/BasicActionsMock/BasicActionsMock';
 
 export function handleCreateSafe(event: CreateSafeEvent): void {
@@ -60,16 +60,6 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         safeAssetClass.safe = safeId
         safeAssetClass.assetClass = collateralTypeIdHex
         safeAssetClass.save()
-    }
-
-    let safeUserProxyAssetClass = SafeUserProxyAssetClass.load(safeUserProxyAssetClassId)
-    if (!safeUserProxyAssetClass) {
-        safeUserProxyAssetClass = new SafeUserProxyAssetClass(safeUserProxyAssetClassId)
-        safeUserProxyAssetClass.id = safeUserProxyAssetClassId
-        safeUserProxyAssetClass.safeUserProxy = safeUserProxyId
-        safeUserProxyAssetClass.assetClass = collateralTypeIdHex
-        safeUserProxyAssetClass.userProxy = userId
-        safeUserProxyAssetClass.save()
     }
 
     let assetClass = AssetClass.load(collateralTypeIdHex)

@@ -17,7 +17,6 @@ type UserProxy @entity {
   owner: Bytes!
   proxy: Bytes!
   safes: [SafeUserProxy!] @derivedFrom(field: "userProxy")
-  safesAssetClasses: [SafeUserProxyAssetClass!] @derivedFrom(field: "userProxy")
   transactionHash: Bytes
   createdTimeStamp: BigInt
 }
@@ -48,12 +47,5 @@ type SafeAssetClass @entity {
 type SafeUserProxy @entity {
   id: ID!
   safe: Safe!
-  userProxy: UserProxy!
-}
-
-type SafeUserProxyAssetClass @entity {
-  id: ID!
-  safeUserProxy: SafeUserProxy!
-  assetClass: AssetClass!
   userProxy: UserProxy!
 }

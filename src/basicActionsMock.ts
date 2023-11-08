@@ -1,3 +1,4 @@
+import { constants } from '@amxx/graphprotocol-utils';
 import { AssetClass, Safe, SafeAssetClass, SafeUserProxy, SafeUserProxyAssetClass } from '../generated/schema';
 import { CreateSafe as CreateSafeEvent } from './../generated/templates/BasicActionsMock/BasicActionsMock';
 
@@ -20,6 +21,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
     if (assetClass) {
         assetClass.collateralLocked = assetClass.collateralLocked.plus(amountCollateral)
         assetClass.debtTokensHeld = assetClass.debtTokensHeld.plus(amountCoin)
+        assetClass.activeVaults = assetClass.activeVaults.plus(constants.BIGINT_ONE)
         assetClass.save()
     }
 

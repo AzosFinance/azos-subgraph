@@ -115,6 +115,19 @@ export class AssetClass extends Entity {
     this.set("debtTokensHeld", Value.fromBigInt(value));
   }
 
+  get activeVaults(): BigInt {
+    let value = this.get("activeVaults");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set activeVaults(value: BigInt) {
+    this.set("activeVaults", Value.fromBigInt(value));
+  }
+
   get safes(): SafeAssetClassLoader {
     return new SafeAssetClassLoader(
       "AssetClass",

@@ -19,6 +19,7 @@ export function handleDeployCollateralJoin(event: DeployCollateralJoinEvent): vo
         assetClass.collateral = event.params._collateral
         assetClass.collateralLocked = constants.BIGINT_ZERO
         assetClass.debtTokensHeld = constants.BIGINT_ZERO
+        assetClass.activeVaults = constants.BIGINT_ZERO
         assetClass.createdTimeStamp = blockTimeStamp
         assetClass.transactionHash = transactionHash
         assetClass.save()

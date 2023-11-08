@@ -1,6 +1,7 @@
 type AssetClass @entity {
   id: ID!
   collateralType: Bytes!
+  collateralTypeName: String!
   collateral: Bytes!
   safes: [SafeAssetClass!] @derivedFrom(field: "assetClass")
   transactionHash: Bytes

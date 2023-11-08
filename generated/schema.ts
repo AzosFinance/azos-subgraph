@@ -63,6 +63,19 @@ export class AssetClass extends Entity {
     this.set("collateralType", Value.fromBytes(value));
   }
 
+  get collateralTypeName(): string {
+    let value = this.get("collateralTypeName");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set collateralTypeName(value: string) {
+    this.set("collateralTypeName", Value.fromString(value));
+  }
+
   get collateral(): Bytes {
     let value = this.get("collateral");
     if (!value || value.kind == ValueKind.NULL) {

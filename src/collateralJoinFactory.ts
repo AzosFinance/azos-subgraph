@@ -1,16 +1,20 @@
 import { AssetClass } from '../generated/schema';
 import { DeployCollateralJoin as DeployCollateralJoinEvent } from '../generated/CollateralJoinFactory/CollateralJoinFactory';
+import { ByteArray } from '@graphprotocol/graph-ts';
 
 export function handleDeployCollateralJoin(event: DeployCollateralJoinEvent): void {
-    const assetClassId = event.params._cType.toHexString()
+    const collateralType = event.params._cType
+    const assetClassIdHex = collateralType.toHexString()
     const blockTimeStamp = event.block.timestamp
     const transactionHash = event.transaction.hash
+    const collateralTypeName = ByteArray.fromHexString(collateralType.toHexString()).toString();
 
-    let assetClass = AssetClass.load(assetClassId)
+    let assetClass = AssetClass.load(assetClassIdHex)
     if (!assetClass) {
-        assetClass = new AssetClass(assetClassId)
-        assetClass.id = assetClassId
-        assetClass.collateralType = event.params._cType
+        assetClass = new AssetClass(assetClassIdHex)
+        assetClass.id = assetClassIdHex
+        assetClass.collateralType = collateralType
+        assetClass.collateralTypeName = collateralTypeName
         assetClass.collateral = event.params._collateral
         assetClass.createdTimeStamp = blockTimeStamp
         assetClass.transactionHash = transactionHash

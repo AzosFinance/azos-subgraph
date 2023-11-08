@@ -27,7 +27,6 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
     const safeId = currentSafeIdCounter.toHexString()
     const safeUserProxyId = safeId + "-" + userId
     const safeAssetClassId = safeId + "-" + collateralTypeIdHex
-    const safeUserProxyAssetClassId = safeUserProxyId + "-" + collateralTypeIdHex
 
     let safe = Safe.load(safeId)
     if (!safe) {

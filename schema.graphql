@@ -24,7 +24,8 @@ type UserProxy @entity {
   sender: Bytes!
   owner: Bytes!
   proxy: Bytes!
-  safes: [SafeUserProxy!] @derivedFrom(field: "userProxy")
+  userProxyAssetClassStatDeposits: [UserProxyAssetClassStatDeposit!]
+    @derivedFrom(field: "userProxy")
   transactionHash: Bytes
   createdTimeStamp: BigInt
 }
@@ -52,8 +53,17 @@ type SafeAssetClass @entity {
   assetClass: AssetClass!
 }
 
-type SafeUserProxy @entity {
+type AssetClassUserProxy @entity {
   id: ID!
-  safe: Safe!
+  assetClass: AssetClass!
   userProxy: UserProxy!
+}
+
+type UserProxyAssetClassStatDeposit @entity {
+  id: ID!
+  userProxy: UserProxy!
+  assetClass: AssetClass!
+  collateralLocked: BigInt!
+  debtTokensHeld: BigInt!
+  activeSafes: BigInt!
 }

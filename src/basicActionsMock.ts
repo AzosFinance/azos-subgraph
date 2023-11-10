@@ -1,5 +1,5 @@
 import { constants } from '@amxx/graphprotocol-utils';
-import { AssetClass, EcosystemInfo, Safe, SafeAssetClass, SafeIdCounter, SafeUserProxy } from '../generated/schema';
+import { AssetClass, EcosystemInfo, Safe, SafeAssetClass, SafeIdCounter, UserProxyAssetClassStatDeposit } from '../generated/schema';
 import { CreateSafe as CreateSafeEvent } from './../generated/templates/BasicActionsMock/BasicActionsMock';
 
 export function handleCreateSafe(event: CreateSafeEvent): void {
@@ -26,8 +26,8 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
 
     const currentSafeIdCounter = safeIdCounter.idCounter
     const safeId = currentSafeIdCounter.toHexString()
-    const safeUserProxyId = safeId + "-" + userId
     const safeAssetClassId = safeId + "-" + collateralTypeIdHex
+    const userProxyAssetClassStatDepositId = userId + "-" + collateralType.toHexString() + "-statDeposits"
 
     let safe = Safe.load(safeId)
     if (!safe) {
@@ -42,15 +42,6 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         safe.transactionHash = transactionHash
         safe.createdTimeStamp = blockTimeStamp
         safe.save()
-    }
-
-    let safeUserProxy = SafeUserProxy.load(safeUserProxyId)
-    if (!safeUserProxy) {
-        safeUserProxy = new SafeUserProxy(safeUserProxyId)
-        safeUserProxy.id = safeUserProxyId
-        safeUserProxy.safe = safeId
-        safeUserProxy.userProxy = userId
-        safeUserProxy.save()
     }
 
     let safeAssetClass = SafeAssetClass.load(safeAssetClassId)
@@ -69,6 +60,21 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
         assetClass.activeSafes = assetClass.activeSafes.plus(constants.BIGINT_ONE)
         assetClass.save()
     }
+
+    let userProxyAssetClassStatDeposit = UserProxyAssetClassStatDeposit.load(userProxyAssetClassStatDepositId)
+    if (!userProxyAssetClassStatDeposit) {
+        userProxyAssetClassStatDeposit = new UserProxyAssetClassStatDeposit(userProxyAssetClassStatDepositId)
+        userProxyAssetClassStatDeposit.id = userProxyAssetClassStatDepositId
+        userProxyAssetClassStatDeposit.userProxy = userId
+        userProxyAssetClassStatDeposit.assetClass = collateralType.toHexString()
+        userProxyAssetClassStatDeposit.collateralLocked = constants.BIGINT_ZERO
+        userProxyAssetClassStatDeposit.debtTokensHeld = constants.BIGINT_ZERO
+        userProxyAssetClassStatDeposit.activeSafes = constants.BIGINT_ZERO
+    }
+    userProxyAssetClassStatDeposit.collateralLocked = userProxyAssetClassStatDeposit.collateralLocked.plus(amountCollateral)
+    userProxyAssetClassStatDeposit.debtTokensHeld = userProxyAssetClassStatDeposit.debtTokensHeld.plus(amountCoin)
+    userProxyAssetClassStatDeposit.activeSafes = userProxyAssetClassStatDeposit.activeSafes.plus(constants.BIGINT_ONE)
+    userProxyAssetClassStatDeposit.save()
 
     let ecosystemInfo = EcosystemInfo.load(ecosystemInfoId)
     if (ecosystemInfo) {

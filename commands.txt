@@ -1,2 +1,3 @@
 graph codegen && graph build --network sepolia
 graph deploy --product hosted-service silverdoor-ai/azos
+graph deploy --product hosted-service silverdoor-ai/azos-dev

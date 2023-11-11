@@ -105,6 +105,121 @@ export class EcosystemInfo extends Entity {
   }
 }
 
+export class StabilityModule extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save StabilityModule entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type StabilityModule must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("StabilityModule", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): StabilityModule | null {
+    return changetype<StabilityModule | null>(
+      store.get_in_block("StabilityModule", id)
+    );
+  }
+
+  static load(id: string): StabilityModule | null {
+    return changetype<StabilityModule | null>(store.get("StabilityModule", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get assetSymbol(): string {
+    let value = this.get("assetSymbol");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set assetSymbol(value: string) {
+    this.set("assetSymbol", Value.fromString(value));
+  }
+
+  get balance(): BigInt {
+    let value = this.get("balance");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set balance(value: BigInt) {
+    this.set("balance", Value.fromBigInt(value));
+  }
+
+  get debt(): BigInt {
+    let value = this.get("debt");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set debt(value: BigInt) {
+    this.set("debt", Value.fromBigInt(value));
+  }
+
+  get createdTimeStamp(): BigInt | null {
+    let value = this.get("createdTimeStamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set createdTimeStamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("createdTimeStamp");
+    } else {
+      this.set("createdTimeStamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get updatedTimeStamp(): BigInt | null {
+    let value = this.get("updatedTimeStamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updatedTimeStamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("updatedTimeStamp");
+    } else {
+      this.set("updatedTimeStamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
 export class AssetClass extends Entity {
   constructor(id: string) {
     super();

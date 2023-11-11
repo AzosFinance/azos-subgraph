@@ -1,16 +1,20 @@
 {
   "sepolia": {
     "CollateralJoinFactory": {
-      "address": "0xC711FDaFfE3c794badbb7B094472e0Dd50742E9e",
-      "startBlock": 4633380
+      "address": "0xFEDc247b1f3212754988204c35c36D09653e37CD",
+      "startBlock": 4658803
     },
     "BasicActionsMock": {
-      "address": "0xfd47f17587778127e0A29376B8cCAe8E810972F5",
-      "startBlock": 4651840
+      "address": "0xF9d19b2b97Db1a660DD336D71B4ed7eDbbea0AE3",
+      "startBlock": 4659032
     },
     "HaiProxyFactory": {
-      "address": "0x857eeBEeb8077BE5191a367bf750ddC8f17Fc78c",
-      "startBlock": 4633381
+      "address": "0xf7406d0D2Ad8a68c82032CD38410783F439ed34a",
+      "startBlock": 4658804
+    },
+    "StabilityModule": {
+      "address": "0x21676aadaC3693a2C65f71C7096829EeA80652e5",
+      "startBlock": 4664374
     }
   }
 }

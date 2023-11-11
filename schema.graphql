@@ -6,6 +6,15 @@ type EcosystemInfo @entity {
   totalAssetClasses: BigInt!
 }
 
+type StabilityModule @entity {
+  id: ID!
+  assetSymbol: String!
+  balance: BigInt!
+  debt: BigInt!
+  createdTimeStamp: BigInt
+  updatedTimeStamp: BigInt
+}
+
 type AssetClass @entity {
   id: ID!
   collateralType: Bytes!

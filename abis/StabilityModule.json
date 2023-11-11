@@ -6,115 +6,32 @@
         "name": "authorizedCollateral_",
         "type": "address"
       },
-      {
-        "internalType": "address",
-        "name": "adapter_",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "adapterName_",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "treasury_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "systemCoin_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "governance_",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxDeposit_",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "debtCeiling_",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "basisFee_",
-        "type": "uint256"
-      }
+      { "internalType": "address", "name": "adapter_", "type": "address" },
+      { "internalType": "bytes32", "name": "adapterName_", "type": "bytes32" },
+      { "internalType": "address", "name": "treasury_", "type": "address" },
+      { "internalType": "address", "name": "systemCoin_", "type": "address" },
+      { "internalType": "address", "name": "governance_", "type": "address" },
+      { "internalType": "uint256", "name": "maxDeposit_", "type": "uint256" },
+      { "internalType": "uint256", "name": "debtCeiling_", "type": "uint256" },
+      { "internalType": "uint256", "name": "basisFee_", "type": "uint256" },
+      { "internalType": "address", "name": "router", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
-  {
-    "inputs": [],
-    "name": "AlreadyAuthorized",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "DebtCeiling",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "FailedDelegateCall",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "FailedDeploy",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "FailedTransfer",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidBalance",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidDebt",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidDeposit",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidFee",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidTrade",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NoAdapter",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NotAuthorized",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "Unauthorized",
-    "type": "error"
-  },
+  { "inputs": [], "name": "AlreadyAuthorized", "type": "error" },
+  { "inputs": [], "name": "DebtCeiling", "type": "error" },
+  { "inputs": [], "name": "FailedDelegateCall", "type": "error" },
+  { "inputs": [], "name": "FailedDeploy", "type": "error" },
+  { "inputs": [], "name": "FailedTransfer", "type": "error" },
+  { "inputs": [], "name": "InvalidBalance", "type": "error" },
+  { "inputs": [], "name": "InvalidDebt", "type": "error" },
+  { "inputs": [], "name": "InvalidDeposit", "type": "error" },
+  { "inputs": [], "name": "InvalidFee", "type": "error" },
+  { "inputs": [], "name": "InvalidTrade", "type": "error" },
+  { "inputs": [], "name": "NoAdapter", "type": "error" },
+  { "inputs": [], "name": "NotAuthorized", "type": "error" },
+  { "inputs": [], "name": "Unauthorized", "type": "error" },
   {
     "anonymous": false,
     "inputs": [
@@ -151,6 +68,19 @@
       }
     ],
     "name": "AddAuthorization",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "authorizedCollateral",
+        "type": "address"
+      }
+    ],
+    "name": "AuthorizedCollateral",
     "type": "event"
   },
   {
@@ -432,54 +362,26 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "name": "_scaleFromSystemCoin",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "",
-        "type": "int256"
-      }
-    ],
+    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "name": "_scaleToSystemCoin",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "adapterName_",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "adapter_",
-        "type": "address"
-      }
+      { "internalType": "bytes32", "name": "adapterName_", "type": "bytes32" },
+      { "internalType": "address", "name": "adapter_", "type": "address" }
     ],
     "name": "addAdapter",
     "outputs": [],
@@ -488,11 +390,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "_account", "type": "address" }
     ],
     "name": "addAuthorization",
     "outputs": [],
@@ -501,19 +399,11 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "_account", "type": "address" }
     ],
     "name": "authorizedAccounts",
     "outputs": [
-      {
-        "internalType": "bool",
-        "name": "_authorized",
-        "type": "bool"
-      }
+      { "internalType": "bool", "name": "_authorized", "type": "bool" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -522,11 +412,7 @@
     "inputs": [],
     "name": "authorizedAccounts",
     "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "_accounts",
-        "type": "address[]"
-      }
+      { "internalType": "address[]", "name": "_accounts", "type": "address[]" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -547,23 +433,13 @@
   {
     "inputs": [],
     "name": "basisFee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newBasisFee",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "newBasisFee", "type": "uint256" }
     ],
     "name": "changeBasisFee",
     "outputs": [],
@@ -572,11 +448,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newDebtCeiling",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "newDebtCeiling", "type": "uint256" }
     ],
     "name": "changeDebtCeiling",
     "outputs": [],
@@ -585,11 +457,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newMaxDeposit",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "newMaxDeposit", "type": "uint256" }
     ],
     "name": "changeMaxDeposit",
     "outputs": [],
@@ -598,11 +466,7 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "newTreasury_",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "newTreasury_", "type": "address" }
     ],
     "name": "changeTreasury",
     "outputs": [],
@@ -611,16 +475,8 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "adapterName",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
-      }
+      { "internalType": "bytes32", "name": "adapterName", "type": "bytes32" },
+      { "internalType": "bytes", "name": "data", "type": "bytes" }
     ],
     "name": "contractAndSell",
     "outputs": [],
@@ -630,23 +486,13 @@
   {
     "inputs": [],
     "name": "debtCeiling",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "name": "deposit",
     "outputs": [],
@@ -655,21 +501,9 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "adapterName",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "mintAmount",
-        "type": "uint256"
-      }
+      { "internalType": "bytes32", "name": "adapterName", "type": "bytes32" },
+      { "internalType": "bytes", "name": "data", "type": "bytes" },
+      { "internalType": "uint256", "name": "mintAmount", "type": "uint256" }
     ],
     "name": "expandAndBuy",
     "outputs": [],
@@ -678,69 +512,37 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "adapterName_",
-        "type": "bytes32"
-      }
+      { "internalType": "bytes32", "name": "adapterName_", "type": "bytes32" }
     ],
     "name": "getAdapter",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "getDebt",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "",
-        "type": "int256"
-      }
-    ],
+    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "getDeposits",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "maxDeposit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
-      }
+      { "internalType": "address", "name": "_account", "type": "address" }
     ],
     "name": "removeAuthorization",
     "outputs": [],
@@ -750,13 +552,7 @@
   {
     "inputs": [],
     "name": "scalingFactor",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -764,11 +560,7 @@
     "inputs": [],
     "name": "systemCoin",
     "outputs": [
-      {
-        "internalType": "contract ISystemCoin",
-        "name": "",
-        "type": "address"
-      }
+      { "internalType": "contract ISystemCoin", "name": "", "type": "address" }
     ],
     "stateMutability": "view",
     "type": "function"

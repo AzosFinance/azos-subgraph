@@ -25,7 +25,7 @@ export function handleCreateSafe(event: CreateSafeEvent): void {
     safeIdCounter.save()
 
     const currentSafeIdCounter = safeIdCounter.idCounter
-    const safeId = currentSafeIdCounter.toHexString()
+    const safeId = currentSafeIdCounter.toString()
     const safeAssetClassId = safeId + "-" + collateralTypeIdHex
     const userProxyAssetClassStatDepositId = userId + "-" + collateralType.toHexString() + "-statDeposits"
 

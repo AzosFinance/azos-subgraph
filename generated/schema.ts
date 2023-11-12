@@ -185,6 +185,19 @@ export class StabilityModule extends Entity {
     this.set("debt", Value.fromBigInt(value));
   }
 
+  get deposit(): BigInt {
+    let value = this.get("deposit");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set deposit(value: BigInt) {
+    this.set("deposit", Value.fromBigInt(value));
+  }
+
   get createdTimeStamp(): BigInt | null {
     let value = this.get("createdTimeStamp");
     if (!value || value.kind == ValueKind.NULL) {

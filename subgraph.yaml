@@ -65,6 +65,8 @@ dataSources:
           handler: handleExpandDebt
         - event: ContractDebt(indexed int256,indexed int256,indexed uint256,uint256)
           handler: handleContractDebt
+        - event: Deposit(indexed uint256)
+          handler: handleDeposit
       file: ./src/stabilityModule.ts
 templates:
   - name: BasicActionsMock

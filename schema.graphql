@@ -11,6 +11,7 @@ type StabilityModule @entity {
   assetSymbol: String!
   balance: BigInt!
   debt: BigInt!
+  deposit: BigInt!
   createdTimeStamp: BigInt
   updatedTimeStamp: BigInt
 }

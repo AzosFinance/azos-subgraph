@@ -1,13 +1,13 @@
 {
-  "name": "magenta",
+  "name": "azos",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ magenta",
-    "create-local": "graph create --node http://localhost:8020/ magenta",
-    "remove-local": "graph remove --node http://localhost:8020/ magenta",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 magenta",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ azos",
+    "create-local": "graph create --node http://localhost:8020/ azos",
+    "remove-local": "graph remove --node http://localhost:8020/ azos",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 azos",
     "test": "graph test"
   },
   "dependencies": {
